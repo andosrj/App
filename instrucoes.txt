@@ -1,0 +1,109 @@
+                                Instruções para Instalação do AudioVisual Pro com XAMPP
+
+Este guia descreve como instalar o sistema AudioVisual Pro (versão PHP)
+em seu ambiente de desenvolvimento local usando XAMPP.
+
+Pré-requisitos:
+1. XAMPP instalado em seu computador. Você pode baixá-lo em:
+   https://www.apachefriends.org/index.html
+2. Arquivos da aplicação AudioVisual Pro, incluindo:
+   - install.php (na raiz)
+   - pasta "install/" contendo "database.sql"
+
+Passos para Instalação:
+
+1. Iniciar o XAMPP:
+   - Abra o Painel de Controle do XAMPP.
+   - Inicie os módulos "Apache" e "MySQL". Aguarde até que ambos fiquem verdes.
+
+2. Preparar o Banco de Dados (Opcional - o instalador pode tentar criar):
+   - No Painel de Controle do XAMPP, ao lado do módulo MySQL, clique em "Admin".
+     Isso abrirá o phpMyAdmin em seu navegador.
+   - No phpMyAdmin, você pode criar um novo banco de dados (ex: `audiovisual_pro`).
+     - Clique em "New" (Novo) no menu à esquerda.
+     - Digite o nome do banco de dados (ex: `audiovisual_pro`).
+     - Selecione a codificação `utf8mb4_general_ci` (recomendado) e clique em "Create" (Criar).
+   - Anote o nome de usuário e senha do seu MySQL. Por padrão no XAMPP, o usuário é `root`
+     e a senha é vazia (em branco).
+
+3. Copiar os Arquivos da Aplicação:
+   - Navegue até o diretório de instalação do XAMPP (geralmente `C:\xampp` no Windows
+     ou `/Applications/XAMPP` no macOS).
+   - Dentro deste diretório, localize a pasta `htdocs`. Esta é a raiz do seu servidor web local.
+   - Crie uma nova pasta dentro de `htdocs` para o seu projeto (ex: `audiovisual-pro`).
+     Caminho final: `C:\xampp\htdocs\audiovisual-pro\`
+   - Copie o arquivo `install.php` para dentro desta nova pasta (`audiovisual-pro/`).
+   - Crie uma subpasta chamada `install` dentro de `audiovisual-pro/`.
+     Caminho final da subpasta: `C:\xampp\htdocs\audiovisual-pro\install\`
+   - Copie o arquivo `database.sql` para dentro da pasta `install/`.
+
+   Sua estrutura de arquivos em `htdocs` deve ser:
+   htdocs/
+   └── audiovisual-pro/
+       ├── install.php
+       └── install/
+           └── database.sql
+
+4. Executar o Instalador Web:
+   - Abra seu navegador web.
+   - Digite a URL para acessar o arquivo `install.php` do seu projeto.
+     Exemplo: `http://localhost/audiovisual-pro/install.php`
+   - Siga os passos apresentados na tela do instalador:
+
+     a. Passo 1: Verificação de Requisitos
+        - O instalador verificará se seu ambiente XAMPP atende aos requisitos.
+        - Se tudo estiver OK, clique em "Próximo".
+
+     b. Passo 2: Configuração do Banco de Dados
+        - Host: `localhost` (geralmente é este para XAMPP)
+        - Porta: `3306` (padrão do MySQL no XAMPP)
+        - Nome do Banco: O nome que você criou no passo 2 (ex: `audiovisual_pro`),
+          ou um novo nome que o instalador tentará criar.
+        - Usuário do Banco: `root` (padrão do XAMPP)
+        - Senha do Banco: Deixe em branco (padrão do XAMPP, a menos que você tenha definido uma).
+        - Clique em "Testar Conexão e Continuar".
+
+     c. Passo 3: Criação das Tabelas
+        - O instalador usará o arquivo `install/database.sql` para criar as tabelas.
+        - Clique em "Criar Tabelas".
+
+     d. Passo 4: Criar Usuário Administrador
+        - Preencha os dados para o usuário administrador do sistema:
+          - Nome Completo
+          - Email
+          - Senha (mínimo 6 caracteres)
+          - Confirmar Senha
+        - Clique em "Criar Administrador".
+
+     e. Passo 5: Finalização
+        - O instalador criará o arquivo `config/database.php` (ou similar, dependendo
+          da implementação final do seu app PHP) com as configurações do banco.
+        - Clique em "Finalizar Instalação".
+
+5. Pós-Instalação (MUITO IMPORTANTE):
+   - Após a mensagem de sucesso da instalação:
+     - DELETE o arquivo `install.php` da pasta `audiovisual-pro/`.
+     - DELETE a pasta `install/` (junto com o arquivo `database.sql` dentro dela)
+       da pasta `audiovisual-pro/`.
+     Isso é crucial para a segurança do seu sistema.
+
+6. Acessar a Aplicação:
+   - Agora você pode acessar a aplicação principal. Se o arquivo principal for `index.php`,
+     a URL será: `http://localhost/audiovisual-pro/`
+   - Faça login com as credenciais de administrador que você criou no passo 4d.
+
+Solução de Problemas Comuns no XAMPP:
+- "Porta Apache Bloqueada": Verifique se outro programa (como Skype) está usando a porta 80.
+  Você pode mudar a porta do Apache no XAMPP ou fechar o programa conflitante.
+- "Erro de Conexão com o Banco de Dados": Verifique se o MySQL está rodando no XAMPP.
+  Confirme o nome de usuário (`root`) e senha (vazia por padrão) do MySQL.
+- "Permissão Negada ao Criar Arquivo de Configuração": Se o instalador tentar criar
+  um arquivo `config/database.php` e falhar, certifique-se de que a pasta
+  `audiovisual-pro/` (e a subpasta `config/` se existir) tem permissões de escrita
+  para o servidor web. No Windows, isso geralmente não é um problema, mas pode ser
+  em outros sistemas operacionais.
+- "Página Não Encontrada (404)": Verifique se o nome da pasta do projeto em `htdocs`
+  corresponde ao nome na URL (`http://localhost/nome-da-pasta/`).
+
+Se você encontrar outros problemas, verifique os logs de erro do Apache e do PHP no XAMPP.
+Eles geralmente estão na pasta `logs/` dentro do diretório de instalação do XAMPP ou do Apache.
